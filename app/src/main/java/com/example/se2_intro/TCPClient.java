@@ -7,8 +7,9 @@ import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Locale;
+import java.util.concurrent.Callable;
 
-public class TCPClient {
+public class TCPClient implements Callable<String> {
 
     private String input;
     private String serverReply;
@@ -18,14 +19,15 @@ public class TCPClient {
         this.input = input;
     }
 
-    public String check() {
+
+    @Override
+    public String call()  {
         try {
-            BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));     //Create Input Strem
+            //BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));     //Create Input Strem
             clientSocket = new Socket("se2-isys.aau.at", 53212);                        // Create Socket and connect to Server
             DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());  // Create OutputStream with created Socket
 
             BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            input = inFromUser.readLine();
 
             outToServer.writeBytes(input + '\n');
 
@@ -33,11 +35,9 @@ public class TCPClient {
 
             clientSocket.close();
 
-        } catch (IOException e) {
+        }catch (IOException e) {
             return e.getMessage();
         }
-
         return serverReply;
     }
-
 }
