@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <person>
+        <name>Matthaeus Gustab</name>
+        <matrikelnummer>11911351</matrikelnummer>
+        <lastcommithash>c5164f5280d3b0f03878fd49fb439cb01492969a</lastcommithash>
+        <githubusername>Gustigusti90</githubusername>
+        <repositoryname>Se2</repositoryname>
+        <repositoryurl>
+            https://github.com/Gustigusti90/se2.git
+        </repositoryurl>
+    </person>
+</PreferenceScreen>
