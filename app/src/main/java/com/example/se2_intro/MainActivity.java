@@ -19,7 +19,9 @@ public class MainActivity extends AppCompatActivity {
 
     EditText matrikelInput;
     Button sendButton;
-    TextView serverReply;
+    TextView textOutput;
+    Button convertButton;
+
 
 
     @Override
@@ -29,9 +31,11 @@ public class MainActivity extends AppCompatActivity {
 
         matrikelInput=findViewById(R.id.input);
         sendButton=findViewById(R.id.button);
-        serverReply=findViewById(R.id.serverReply);
+        textOutput=findViewById(R.id.serverReply);
+        convertButton=findViewById(R.id.convertButton);
 
 
+        // Server Connection:
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -42,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
                 Future<String> result = executorService.submit(connection);
 
                 try {
-                    serverReply.setText(result.get());
+                    textOutput.setText(result.get());
                 } catch (InterruptedException e) {
                     Log.e("Interrupted Exception",e.getMessage());
                 } catch (ExecutionException e) {
@@ -52,7 +56,38 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+        // ASCII Converter:
+        convertButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                String input = matrikelInput.getText().toString();
+
+                if (input.isEmpty()) {
+                    textOutput.setText("Bitte MatrikelNr eingeben");
+                }
+                else if (input.length()!=8) {
+                    textOutput.setText("MatrikelNr muss 8 stellig sein!");
+                }
+                else {
+                    char[] chr = input.toCharArray();
+                    char[] output = new char[8];
+                    String res = "";
+
+                    for (int i=0; i<chr.length; i++ ){
+                        if (i%2==0)
+                            res+=chr[i];
+                        else {
+                            int temp= chr[i]+48;
+                            char ascii = (char)temp;
+                            res += ascii;
+                        }
+                    }
+                    textOutput.setText(res);
+                }
+            }
+        });
 
     }
+
 }
