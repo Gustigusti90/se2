@@ -23,14 +23,19 @@ public class TCPClient implements Callable<String> {
     @Override
     public String call()  {
         try {
-            //BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));     //Create Input Strem
-            clientSocket = new Socket("se2-isys.aau.at", 53212);                        // Create Socket and connect to Server
-            DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());  // Create OutputStream with created Socket
+            // Create Socket and connect to Server:
+            clientSocket = new Socket("se2-isys.aau.at", 53212);
 
+            // Create Input Stream (Receiving from the Server):
             BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
+            // Create OutputStream with created Socket (Sending to Server):
+            DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
+
+            // Send out to the Server:
             outToServer.writeBytes(input + '\n');
 
+            // Get Reply from Server:
             serverReply = inFromServer.readLine();
 
             clientSocket.close();
